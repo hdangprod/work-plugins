@@ -80,7 +80,11 @@ test('claim status and confidence are derived from pair checks', () => {
   assert.equal(claimStatus(claim({ 'E-1': { verdict: 'supported' }, 'E-2': { verdict: 'refuted' } })), 'contested');
   assert.equal(claimStatus(claim({ 'E-1': { verdict: 'partial' }, 'E-2': { verdict: 'unreachable' } })), 'partial');
   assert.equal(claimStatus(claim({ 'E-2': { verdict: 'unreachable' } }, ['E-2'])), 'unreachable');
-  assert.equal(claimConfidence(claim({ 'E-1': { verdict: 'supported' }, 'E-2': { verdict: 'partial' } }), ev), 'C');
+  assert.equal(claimStatus(claim({ 'E-1': { verdict: 'supported' }, 'E-2': { verdict: 'partial' } })), 'partial', 'one partial pair makes the claim partial');
+  assert.equal(claimConfidence(claim({ 'E-1': { verdict: 'supported' }, 'E-2': { verdict: 'partial' } }), ev), 'U');
+  const mixed = { ...claim({ 'E-1': { verdict: 'supported' }, 'E-2': { verdict: 'supported' } }), kind: 'inference' };
+  assert.equal(claimConfidence(mixed, ev), 'T', 'an inference takes the letter of its weakest source');
+  assert.equal(claimConfidence({ ...mixed, kind: 'fact' }, ev), 'C', 'a fact corroborated by a vendor page stays C');
   assert.equal(claimConfidence(claim({ 'E-2': { verdict: 'supported' } }, ['E-2']), ev), 'T');
   assert.equal(claimConfidence(claim({ 'E-1': { verdict: 'refuted' } }, ['E-1']), ev), 'U');
 });

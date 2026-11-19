@@ -101,19 +101,21 @@ export function evidenceShow({ pos, cwd }) {
 }
 
 // ---- claims ----
-/** contested > unverified > supported > refuted > partial > unreachable. `unknown` claims are open questions and are never verified. */
+/** contested > unverified > refuted > partial > supported > unreachable: a claim is as strong as its weakest checked pair. `unknown` claims are open questions and are never verified. */
 export function claimStatus(claim) {
   if (claim.kind === 'unknown') return 'open';
   const verdicts = (claim.sources ?? []).map((s) => claim.checks?.[s]?.verdict);
   if (verdicts.includes('supported') && verdicts.includes('refuted')) return 'contested';
   if (!verdicts.length || verdicts.some((v) => !v)) return 'unverified';
-  for (const v of ['supported', 'refuted', 'partial']) if (verdicts.includes(v)) return v;
+  for (const v of ['refuted', 'partial', 'supported']) if (verdicts.includes(v)) return v;
   return 'unreachable';
 }
-/** C = supported by an official or primary source, T = supported by third-party or community sources only, U = not established. */
+/** C = supported by an official or primary source (for an inference: by such sources only), T = otherwise supported, U = not established. */
 export function claimConfidence(claim, evidenceById) {
   if (claimStatus(claim) !== 'supported') return 'U';
-  const strong = claim.sources.some((s) => claim.checks?.[s]?.verdict === 'supported' && ['official', 'primary'].includes(evidenceById.get(s)?.tier));
+  const supported = claim.sources.filter((s) => claim.checks?.[s]?.verdict === 'supported');
+  const isStrong = (s) => ['official', 'primary'].includes(evidenceById.get(s)?.tier);
+  const strong = claim.kind === 'inference' ? supported.every(isStrong) : supported.some(isStrong);
   return strong ? 'C' : 'T';
 }
 

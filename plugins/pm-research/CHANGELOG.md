@@ -13,6 +13,13 @@ Entry format:
 - Result: pending | kept | rolled back (<why>)
 ```
 
+## 2026-11-19 — a claim is as strong as its weakest pair
+- Proposal: P-001 (lesson L-004; mistakes M-004, M-006)
+- Changed: `lib/ledger.mjs` (`claimStatus` returns `partial` when any checked pair is partial, even if another pair is supported; `claimConfidence` gives an inference C only when every supporting source is official or primary, while a fact keeps C when one is), `test/run-ledger.test.mjs` (the test that asserted the optimistic summary now asserts the strict one, plus cases for inference and fact letters).
+- Expected effect: in the next three runs, no report cites a claim that has a partial pair, and no red-team finding concerns a confidence letter stronger than a claim's sources.
+- Re-check: 2027-02-19, or at the retro after the third run if that comes first.
+- Result: pending
+
 ## 2026-11-19 — replies that answer first, two sizes of work, working-style profile
 - Proposal: direct development, requested by the owner after a side-by-side evaluation against Anthropic's `product-management` plugin and against no plugin (method and numbers: `evals/README.md`).
 - Changed:
