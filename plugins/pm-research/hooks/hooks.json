@@ -1,0 +1,20 @@
+{
+  "description": "pm-research: session brief, owner approval of plugin changes, memory guard, artefact lint, unfinished-run reminder",
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/cli.mjs\" brief --hook", "timeout": 10 }] }
+    ],
+    "UserPromptSubmit": [
+      { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/cli.mjs\" approve --hook", "timeout": 10 }] }
+    ],
+    "PreToolUse": [
+      { "matcher": "Write|Edit|MultiEdit|NotebookEdit", "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/cli.mjs\" guard --hook", "timeout": 10 }] }
+    ],
+    "PostToolUse": [
+      { "matcher": "Write|Edit|MultiEdit", "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/cli.mjs\" lint --hook", "timeout": 10 }] }
+    ],
+    "Stop": [
+      { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/cli.mjs\" stop --hook", "timeout": 10 }] }
+    ]
+  }
+}

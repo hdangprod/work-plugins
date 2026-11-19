@@ -1,0 +1,10 @@
+{
+  "name": "pm-research-plugin",
+  "private": true,
+  "type": "module",
+  "description": "CLI and tests of the pm-research plugin. No dependencies.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test test/"
+  }
+}

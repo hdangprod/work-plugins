@@ -1,0 +1,7 @@
+{
+  "name": "pm-research",
+  "version": "0.1.0",
+  "description": "Deep product and competitor research with a product manager's discipline: decision-first briefs, an evidence ledger, claim-by-claim verification, options with a pre-mortem, plans, and a two-tier memory that learns from past mistakes. Changes to the plugin itself need the owner's approval.",
+  "author": { "name": "hdangprod" },
+  "keywords": ["product-management", "research", "competitor-analysis", "strategy", "memory"]
+}

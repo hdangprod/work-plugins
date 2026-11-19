@@ -1,0 +1,12 @@
+{
+  "name": "hdang-plugins",
+  "owner": { "name": "hdangprod" },
+  "metadata": { "description": "Personal, reusable Claude Code plugins. Skills follow the open SKILL.md standard." },
+  "plugins": [
+    {
+      "name": "pm-research",
+      "source": "./plugins/pm-research",
+      "description": "Deep product and competitor research with a product manager's discipline: evidence ledger, verified claims, options, plans, and a memory that learns from its mistakes."
+    }
+  ]
+}
